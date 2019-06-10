@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://unpkg.com/konva@3.2.7/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <title>Konva Elastic Stars Demo</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script>
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var circles = [];
+        var stage = new Konva.Stage({
+            container: 'container',
+            width: width,
+            height: height
+        });
+        var layer = new Konva.Layer();
+        function makeid(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }    
+            return result;
+        }
+        
+        var rect1 = new Konva.Rect({
+            x: (stage.width()-150)-10,
+            y: stage.height()/2,
+            width: 105,
+            height: 105,
+            fill: 'green',
+            stroke: 'black',
+            strokeWidth: 4
+        });
+        console.log( 'react1 ' + rect1.x() +','+rect1.y() );
+        var rect2 = new Konva.Rect({
+                x: (stage.width()-150)-10,
+                y: (stage.height()/2) -120,
+                width: 105,
+                height: 105,
+                fill: 'green',
+                stroke: 'black',
+                strokeWidth: 4
+        });
+        var rect3 = new Konva.Rect({
+                x: (stage.width()-150)-10,
+                y: (stage.height()/2) + 120,
+                width: 105,
+                height: 105,
+                fill: 'green',
+                stroke: 'black',
+                strokeWidth: 4
+        });
+        layer.add(rect1);
+        layer.add(rect2);
+        layer.add(rect3);
+        rect3.on('mousedown', function() {
+            alert('Mousedown circle');
+            console.log(circles);
+            for (var i = 0; i < circles.length; i++) {
+                if( ((rect1.x() + (rect1.width()/2) ) - circles[i].getX()) <= 20 ){
+                    console.log("ok");
+                }
+                console.log(circles[i].getX());
+            }
+        });
+
+        function addPeça(layer, stage){
+            var circle = new Konva.Circle({
+                x: (Math.random() * (stage.width()-200) ),
+                y: (Math.random() * (stage.height()) ),
+                radius: 50,
+                fill: 'red',
+                stroke: 'black',
+                //draggable: true,
+                strokeWidth: 4
+            });
+            
+            var character = makeid(1); 
+            var simpleText = new Konva.Text({
+                x: circle.getX()-9,
+                y: circle.getY()-12,
+                text: character,
+                fontSize: 40,
+                fontFamily: 'Calibri',
+                fill: 'green'
+            });
+
+            var group = new Konva.Group({
+                draggable: true,
+                //x: 100,
+                //y: 100,
+                name : character,
+            }); 
+            circles.push(group);
+
+            group.on('dragend', function() {
+                alert(circle.x() + group.x() + ','+ group.y()+ group.name());
+                group.setX(circle.x()+group.x());
+                group.setY(group.y()+circle.y());
+            });
+
+            group.add(circle);
+            group.add(simpleText);
+            layer.add(group);
+        }
+        for (var n = 0; n < 2; n++)
+            addPeça(layer,stage);
+        stage.add(layer);
+    </script>    
+    
+</body>
+</html>
