@@ -3,7 +3,7 @@
   <head>
     <script src="https://unpkg.com/konva@3.2.7/konva.min.js"></script>
     <meta charset="utf-8" />
-    <title>Konva Elastic Stars Demo</title>
+    <title>Fábrica de Software 2</title>
     <style>
       body {
         margin: 0;
@@ -29,7 +29,7 @@
 
         function makeid(length) {
             var result           = '';
-            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             var charactersLength = characters.length;
             for ( var i = 0; i < length; i++ ) {
                 result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -87,7 +87,7 @@
                 text: makeid(1),
                 fontSize: 40,
                 fontFamily: 'Calibri',
-                fill: 'green'
+                fill: 'white'
             });
 
             var group = new Konva.Group({
